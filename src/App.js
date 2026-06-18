@@ -3,6 +3,7 @@ import allQuizQuestions from './api/quizQuestions'; // Rename source raw array
 import Quiz from './components/Quiz';
 import Result from './components/Result';
 import SelectNumOfQs from './components/SelectNumOfQs';
+import Landing from './components/Landing';
 import logo from './svg/logo.svg';
 import './App.css';
 
@@ -11,6 +12,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      choiceNum: 0,
       counter: 0,
       questionId: 1,
       question: '',
@@ -29,24 +31,60 @@ class App extends Component {
     this.handleNextQuestion = this.handleNextQuestion.bind(this);
     this.setNextQuestion = this.setNextQuestion.bind(this);
     this.handleSetNumOfQs = this.handleSetNumOfQs.bind(this);
+    this.handleLandingSelection = this.handleLandingSelection.bind(this);
+  }
+
+  handleLandingSelection(selectedValue) {
+    const choiceNum = Number(selectedValue);
+    const shuffleArray = (array) => {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    };
+
+    if (choiceNum < 0) {
+      let slicedQuestions = allQuizQuestions;
+      if (choiceNum === -2) {
+        slicedQuestions = shuffleArray(slicedQuestions);
+      }
+      const correctOption = slicedQuestions.map(question => question.answers[question.correct]);
+      const shuffledAnswerOptions = slicedQuestions.map(question => {
+        return shuffleArray(question.answers);
+      });
+
+      this.setState({
+        numOfQs: allQuizQuestions.length,
+        quizQuestionsList: slicedQuestions,
+        question: slicedQuestions[0].question,
+        answerOptions: shuffledAnswerOptions[0],
+        correctOption: correctOption[0],
+        counter: 0,
+        questionId: 1
+      });
+    } 
+    this.setState({choiceNum: choiceNum});
   }
 
   handleSetNumOfQs(selectedValue) {
     const num = Number(selectedValue);
-    console.log(num);
-    // Slice the full questions list to match the user's choice
-    const slicedQuestions = allQuizQuestions.slice(0, num);
+    
+    const shuffleArray = (array) => {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    };
 
+    // Slice the full questions list to match the user's choice
+    let slicedQuestions = allQuizQuestions.slice(0, num)
+    slicedQuestions = shuffleArray(slicedQuestions);
     const correctOption = slicedQuestions.map(question => question.answers[question.correct]);
     const shuffledAnswerOptions = slicedQuestions.map(question => {
-      const shuffleArray = (array) => {
-        const newArray = [...array];
-        for (let i = newArray.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-        }
-        return newArray;
-      };
       return shuffleArray(question.answers);
     });
 
@@ -89,7 +127,6 @@ class App extends Component {
 
     const nextCorrectIndex = questions[counter].correct;
     const nextCorrectOption = questions[counter].answers[nextCorrectIndex];
-
     const shuffleArray = (array) => {
       const newArray = [...array];
       for (let i = newArray.length - 1; i > 0; i--) {
@@ -143,9 +180,20 @@ class App extends Component {
     );
   }
 
+  renderLanding() {
+    return (
+      <Landing
+        onConfirmPressed={this.handleLandingSelection}
+      />
+    );
+  }
+
+
   render() {
     let view;
-    if (this.state.numOfQs === 0) {
+    if (this.state.choiceNum === 0) {
+      view = this.renderLanding();
+    } else if (this.state.numOfQs === 0) {
       view = this.renderSelection();
     } else if (this.state.result) {
       view = this.renderResult();

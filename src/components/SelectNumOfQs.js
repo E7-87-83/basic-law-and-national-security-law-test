@@ -13,9 +13,7 @@ function SelectNumOfQs(props) {
     const checkedRadio = document.querySelector("input[name='numOfQs']:checked");
     if (checkedRadio) {
       const numOfQs = parseInt(checkedRadio.value, 10);
-      console.log(numOfQs);
       if (numOfQs > 0) {
-         // FIX: Pass the parsed integer value to the parent callback!
          props.onConfirmPressed(numOfQs);
       }
     }

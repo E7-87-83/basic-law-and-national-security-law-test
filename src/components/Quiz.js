@@ -6,6 +6,13 @@ import QuestionCount from '../components/QuestionCount';
 import AnswerOption from '../components/AnswerOption';
 
 function Quiz(props) {
+  const textToCopy = "Q. "+props.question
+		+"\n"
+		+"Option:\n"
+		+props.answerOptions.join("\n")
+		+"\n\nCorrect:\n"
+		+props.correctOption+"\n";
+
   function renderAnswerOptions(key, currentSelection) {
     return (
       <AnswerOption
@@ -35,7 +42,7 @@ function Quiz(props) {
         appear={true}
       >
         <div ref={nodeRef}>
-          <QuestionCount counter={props.questionId} total={props.questionTotal} />
+          <QuestionCount counter={props.questionId} total={props.questionTotal} correctCount={props.correctCount} />
           <Question content={props.question} />
           <ul className="answerOptions">
             {props.answerOptions.map((option) => renderAnswerOptions(option, props.answer))}
@@ -49,6 +56,14 @@ function Quiz(props) {
             >
               {isLastQuestion ? "View Results" : "Next Question"}
             </button>
+	    &nbsp;
+	    <button
+	      className="copyButton"
+	      onClick={() => {navigator.clipboard.writeText(textToCopy)}}
+              disabled={props.answer === ''}
+	    >
+	      {"Copy Text"}
+	    </button>
           </div>
         </div>
       </CSSTransition>
