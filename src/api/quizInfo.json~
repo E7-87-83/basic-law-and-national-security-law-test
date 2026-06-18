@@ -1,0 +1,65 @@
+[
+  {
+    "question": "What franchise would you rather play a game from?",
+    "answers": [
+        "Halo",
+        "Pokemon",
+        "Uncharted"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which console would you prefer to play with friends?",
+    "answers": [
+        "X-Box",
+        "Nintendo 64",
+	"Playstation 1"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Which of these racing franchises would you prefer to play a game from?",
+    "answers": [
+      {
+        "content": "Forza"
+      },
+      {
+        "content": "Mario Kart"
+      },
+      {
+        "content": "Gran Turismo"
+      }
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which of these games do you think is best?",
+    "answers": [
+      {
+        "content": "BioShock"
+      },
+      {
+        "content": "The Legend of Zelda: Ocarina of Time"
+      },
+      {
+        "content": "Final Fantasy VII"
+      }
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What console would you prefer to own?",
+    "answers": [
+      {
+        "content": "X-Box One"
+      },
+      {
+        "content": "Wii U"
+      },
+      {
+        "content": "Playstation 4"
+      }
+    ],
+    "correct": 2
+  }
+]

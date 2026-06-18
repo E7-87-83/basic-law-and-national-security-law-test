@@ -1,0 +1,12 @@
+[
+  {"question": "What franchise would you rather play a game from?","answers": [
+   "Halo",
+   "Pokemon",
+   "Uncharted"
+  ],"correct": 1},
+  {"question": "Which console would you prefer to play with friends?","answers": [
+   "X-Box",
+   "Nintendo 64",
+   "Playstation 1"
+  ],"correct": 2}
+]
