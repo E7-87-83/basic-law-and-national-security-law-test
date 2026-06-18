@@ -13,6 +13,12 @@ function Quiz(props) {
 		+"\n\nCorrect:\n"
 		+props.correctOption+"\n";
 
+  // Slider change handler
+  const handleSliderChange = (event) => {
+    const targetId = Number(event.target.value);
+    props.onJumpToQuestion(targetId);
+  };
+
   function renderAnswerOptions(key, currentSelection) {
     return (
       <AnswerOption
@@ -28,9 +34,8 @@ function Quiz(props) {
   }
 
   const isLastQuestion = props.questionId === props.questionTotal;
-  
-  // 1. Create a persistent DOM node reference mapping for this specific question view mount
   const nodeRef = createRef(null);
+  const displayAtt = props.choiceNum == -1 ? 'visible' : 'none';
 
   return (
     <TransitionGroup className="container" component="div">
@@ -49,6 +54,23 @@ function Quiz(props) {
           </ul>
           
           <div className="quizFooter">
+            
+            <div className="sliderContainer" style={{ margin: '0', textAlign: 'left' , display: displayAtt}}
+	    >
+              <label htmlFor="question-slider" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                Jump to Question: {props.questionId} / {props.questionTotal}
+              </label>
+              <input 
+                id="question-slider"
+                type="range" 
+                min="1" 
+                max={props.questionTotal} 
+                value={props.questionId} 
+                onChange={handleSliderChange}
+                style={{ width: '80%', maxWidth: '400px', cursor: 'pointer' }}
+              />
+            </div>
+
             <button 
               className="nextButton"
               onClick={props.onNextPressed}
@@ -71,7 +93,9 @@ function Quiz(props) {
   );
 }
 
+
 Quiz.propTypes = {
+  choiceNum: PropTypes.number.isRequired,
   correctCount: PropTypes.number.isRequired,
   correctOption: PropTypes.string.isRequired,
   answerOptions: PropTypes.array.isRequired,
@@ -80,7 +104,8 @@ Quiz.propTypes = {
   questionTotal: PropTypes.number.isRequired,
   onAnswerSelected: PropTypes.func.isRequired,
   onNextPressed: PropTypes.func.isRequired,
-  answer: PropTypes.string
+  answer: PropTypes.string,
+  onJumpToQuestion: PropTypes.func.isRequired
 };
 
 export default Quiz;

@@ -32,6 +32,7 @@ class App extends Component {
     this.setNextQuestion = this.setNextQuestion.bind(this);
     this.handleSetNumOfQs = this.handleSetNumOfQs.bind(this);
     this.handleLandingSelection = this.handleLandingSelection.bind(this);
+    this.handleJumpToQuestion = this.handleJumpToQuestion.bind(this);
   }
 
   handleLandingSelection(selectedValue) {
@@ -146,9 +147,41 @@ class App extends Component {
     });
   }
 
+handleJumpToQuestion(targetQuestionId) {
+  const targetIndex = targetQuestionId - 1;
+  const questions = this.state.quizQuestionsList;
+
+  // Boundary check
+  if (targetIndex < 0 || targetIndex >= questions.length) return;
+
+  const targetCorrectIndex = questions[targetIndex].correct;
+  const targetCorrectOption = questions[targetIndex].answers[targetCorrectIndex];
+  
+  const shuffleArray = (array) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
+
+  this.setState({
+    counter: targetIndex,
+    correctCount: 0,
+    questionId: targetQuestionId,
+    question: questions[targetIndex].question,
+    answerOptions: shuffleArray(questions[targetIndex].answers),
+    correctOption: targetCorrectOption, 
+    answer: '' // Resets the selected answer choice for the new question
+  });
+}
+
+
   renderQuiz() {
     return (
       <Quiz
+        choiceNum={this.state.choiceNum}
         correctCount={this.state.correctCount}
         correctOption={this.state.correctOption}
         answerOptions={this.state.answerOptions}
@@ -158,6 +191,7 @@ class App extends Component {
         questionTotal={this.state.numOfQs} 
         onAnswerSelected={this.handleAnswerSelected}
         onNextPressed={this.handleNextQuestion}
+        onJumpToQuestion={this.handleJumpToQuestion}
       />
     );
   }
