@@ -74,6 +74,37 @@ body {
   border-top: 1px solid #eee;
 }
 
+.numOfQsOption {
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #eee;
+}
+
+.radioMyButton {
+  border: 0px;
+  width: 30px;
+  height: 30px;
+}
+
+.radioMyButton,
+.radioMyLabel {
+  display: inline;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.radioMyLabel {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 1.5rem 2.5rem 1.5rem 5rem;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+
+
 .answerOption:hover {
   background-color: #eefbfe;
 }

@@ -31,7 +31,7 @@ function Quiz(props) {
         key={props.questionId}
         nodeRef={nodeRef}
         classNames="fade"
-        timeout={{ enter: 800, exit: 500 }} 
+        timeout={{ enter: 500, exit: 300 }} 
         appear={true}
       >
         <div ref={nodeRef}>
