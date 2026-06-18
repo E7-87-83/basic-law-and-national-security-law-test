@@ -4,7 +4,7 @@ import Quiz from './components/Quiz';
 import Result from './components/Result';
 import SelectNumOfQs from './components/SelectNumOfQs';
 import Landing from './components/Landing';
-import logo from './svg/logo.svg';
+import basicDetail from './basicDetail.json';
 import './App.css';
 
 class App extends Component {
@@ -238,8 +238,8 @@ handleJumpToQuestion(targetQuestionId) {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>香港基本法及國安法溫習工具</h2>
+          <img src={basicDetail.logoAbsPath} className="App-logo" alt="logo" />
+          <h2>{basicDetail.title}</h2>
         </div>
         {view}
       </div>
